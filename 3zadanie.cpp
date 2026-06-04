@@ -160,8 +160,6 @@ Vector solveBySeidel(const Matrix& matrix, const Vector& rightPart, double epsil
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
-
     const double epsilon = 0.001;
 
     double m = -1.21;

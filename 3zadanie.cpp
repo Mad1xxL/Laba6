@@ -176,7 +176,7 @@ int main() {
     Vector rightPart = {-1.24, p, 2.56, m};
 
     cout << "M = " << m << ", N = " << n << ", P = " << p << endl;
-    cout << "Точность epsilon = " << epsilon << endl << endl;
+    cout << "Точность = " << epsilon << endl << endl;
 
     printMatrix("Матрица A:", matrix);
     printVector("Вектор b:", rightPart);

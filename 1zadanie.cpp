@@ -12,37 +12,40 @@ using namespace std;
 int randomInt(int left, int right) {
     static mt19937 generator(static_cast<unsigned>(time(nullptr)));
     uniform_int_distribution<int> distribution(left, right);
+
     return distribution(generator);
 }
 
 void printMatrix(const vector<vector<int>>& matrix) {
-    for (const auto& row : matrix) {
+    for (const vector<int>& row : matrix) {
         for (int value : row) {
             cout << setw(4) << value;
         }
-        cout << '\n';
+
+        cout << endl;
     }
 }
 
-void task1_1() {
+void firstTask() {
     int n;
     cout << "Введите четное N > 6: ";
     cin >> n;
 
     if (n <= 6 || n % 2 != 0) {
-        cout << "Ошибка: N должно быть четным и больше 6.\n";
+        cout << "Ошибка: N должно быть четным и больше 6" << endl;
         return;
     }
 
     vector<vector<int>> matrix(n, vector<int>(n));
 
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             matrix[i][j] = randomInt(0, 100);
         }
     }
 
-    cout << "\nИсходная матрица:\n";
+    cout << endl;
+    cout << "Исходная матрица:" << endl;
     printMatrix(matrix);
 
     int half = n / 2;
@@ -51,8 +54,8 @@ void task1_1() {
     int sum = 0;
     int maxValue = matrix[0][0];
 
-    for (int i = 0; i < half; ++i) {
-        for (int j = 0; j < half; ++j) {
+    for (int i = 0; i < half; i++) {
+        for (int j = 0; j < half; j++) {
             quarter[i][j] = matrix[i][j];
             sum += quarter[i][j];
 
@@ -62,15 +65,18 @@ void task1_1() {
         }
     }
 
-    cout << "\nЛевая верхняя четверть:\n";
+    cout << endl;
+    cout << "Левая верхняя четверть:" << endl;
     printMatrix(quarter);
 
-    cout << "\nСумма элементов левой верхней четверти: " << sum << '\n';
-    cout << "Максимальный элемент в левой верхней четверти: " << maxValue << '\n';
+    cout << endl;
+    cout << "Сумма элементов левой верхней четверти: " << sum << endl;
+    cout << "Максимальный элемент в левой верхней четверти: " << maxValue << endl;
 }
 
 int sumDigits(int number) {
     number = abs(number);
+
     int sum = 0;
 
     while (number > 0) {
@@ -81,100 +87,109 @@ int sumDigits(int number) {
     return sum;
 }
 
-void task1_2() {
-    int m, n;
-    cout << "Введите M > 5 и N > 5: ";
-    cin >> m >> n;
+void secondTask() {
+    int rows;
+    int columns;
 
-    if (m <= 5 || n <= 5) {
-        cout << "Ошибка: M и N должны быть больше 5.\n";
+    cout << "Введите M > 5: ";
+    cin >> rows;
+
+    cout << "Введите N > 5: ";
+    cin >> columns;
+
+    if (rows <= 5 || columns <= 5) {
+        cout << "Ошибка: M и N должны быть больше 5" << endl;
         return;
     }
 
-    vector<vector<int>> matrix(m, vector<int>(n));
+    vector<vector<int>> matrix(rows, vector<int>(columns));
 
-    for (int i = 0; i < m; ++i) {
-        for (int j = 0; j < n; ++j) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
             matrix[i][j] = randomInt(1000, 5000);
         }
     }
 
-    cout << "\nИсходная матрица:\n";
+    cout << endl;
+    cout << "Исходная матрица:" << endl;
     printMatrix(matrix);
 
-    vector<int> rowDigitSums(m);
+    vector<int> rowSums(rows);
     int minRowIndex = 0;
 
-    cout << "\nТаблица сумм цифр:\n";
-    cout << "Номер строки | Сумма цифр\n";
+    cout << endl;
+    cout << "Таблица сумм цифр:" << endl;
+    cout << "Номер строки | Сумма цифр" << endl;
 
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < rows; i++) {
         int rowSum = 0;
 
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < columns; j++) {
             rowSum += sumDigits(matrix[i][j]);
         }
 
-        rowDigitSums[i] = rowSum;
+        rowSums[i] = rowSum;
 
-        cout << setw(12) << i << " | " << rowSum << '\n';
+        cout << setw(12) << i << " | " << rowSum << endl;
 
-        if (rowDigitSums[i] < rowDigitSums[minRowIndex]) {
+        if (rowSums[i] < rowSums[minRowIndex]) {
             minRowIndex = i;
         }
     }
 
-    int* dynamicArray = new int[n];
+    int* resultArray = new int[columns];
 
-    for (int j = 0; j < n; ++j) {
-        dynamicArray[j] = matrix[minRowIndex][j];
+    for (int j = 0; j < columns; j++) {
+        resultArray[j] = matrix[minRowIndex][j];
     }
 
-    cout << "\nСтрока с наименьшей суммой цифр: " << minRowIndex << '\n';
-    cout << "Сумма цифр этой строки: " << rowDigitSums[minRowIndex] << '\n';
+    cout << endl;
+    cout << "Строка с наименьшей суммой цифр: " << minRowIndex << endl;
+    cout << "Сумма цифр этой строки: " << rowSums[minRowIndex] << endl;
 
-    cout << "Динамический массив из элементов найденной строки:\n";
-    for (int j = 0; j < n; ++j) {
-        cout << dynamicArray[j] << ' ';
+    cout << "Динамический массив из элементов найденной строки:" << endl;
+    for (int j = 0; j < columns; j++) {
+        cout << resultArray[j] << ' ';
     }
-    cout << '\n';
+    cout << endl;
 
-    delete[] dynamicArray;
+    delete[] resultArray;
 }
 
 void clearConsole() {
-#ifdef _WIN32
-    system("cls");
-#else
     system("clear");
-#endif
 }
 
 void printLifeBoard(const vector<vector<int>>& board) {
-    for (const auto& row : board) {
+    for (const vector<int>& row : board) {
         for (int cell : row) {
-            cout << (cell ? '#' : ' ');
+            if (cell == 1) {
+                cout << '#';
+            } else {
+                cout << ' ';
+            }
         }
-        cout << '\n';
+
+        cout << endl;
     }
 }
 
-int countAliveNeighbours(const vector<vector<int>>& board, int row, int col) {
-    int rows = static_cast<int>(board.size());
-    int cols = static_cast<int>(board[0].size());
+int countAliveNeighbours(const vector<vector<int>>& board, int row, int column) {
+    int rows = board.size();
+    int columns = board[0].size();
     int count = 0;
 
-    for (int di = -1; di <= 1; ++di) {
-        for (int dj = -1; dj <= 1; ++dj) {
-            if (di == 0 && dj == 0) {
+    for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+        for (int columnOffset = -1; columnOffset <= 1; columnOffset++) {
+            if (rowOffset == 0 && columnOffset == 0) {
                 continue;
             }
 
-            int ni = row + di;
-            int nj = col + dj;
+            int nextRow = row + rowOffset;
+            int nextColumn = column + columnOffset;
 
-            if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
-                count += board[ni][nj];
+            if (nextRow >= 0 && nextRow < rows && nextColumn >= 0 && nextColumn < columns) {
+                count += board[nextRow][nextColumn];
             }
         }
     }
@@ -182,75 +197,86 @@ int countAliveNeighbours(const vector<vector<int>>& board, int row, int col) {
     return count;
 }
 
-vector<vector<int>> nextGeneration(const vector<vector<int>>& board) {
-    int rows = static_cast<int>(board.size());
-    int cols = static_cast<int>(board[0].size());
+vector<vector<int>> createNextGeneration(const vector<vector<int>>& board) {
+    int rows = board.size();
+    int columns = board[0].size();
 
-    vector<vector<int>> next(rows, vector<int>(cols, 0));
+    vector<vector<int>> nextBoard(rows, vector<int>(columns, 0));
 
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
             int neighbours = countAliveNeighbours(board, i, j);
 
             if (board[i][j] == 1) {
-                next[i][j] = (neighbours == 2 || neighbours == 3);
+                if (neighbours == 2 || neighbours == 3) {
+                    nextBoard[i][j] = 1;
+                }
             } else {
-                next[i][j] = (neighbours == 3);
+                if (neighbours == 3) {
+                    nextBoard[i][j] = 1;
+                }
             }
         }
     }
 
-    return next;
+    return nextBoard;
 }
 
-void placeEater(vector<vector<int>>& board, int row, int col) {
-    vector<pair<int, int>> cells = {
-        {0, 0}, {0, 1},
-        {1, 0},
-        {2, 1},
-        {3, 1}, {3, 2}
-    };
+void placeEater(vector<vector<int>>& board, int row, int column) {
+    int rows = board.size();
+    int columns = board[0].size();
 
-    for (auto [di, dj] : cells) {
-        int r = row + di;
-        int c = col + dj;
-
-        if (r >= 0 && r < static_cast<int>(board.size()) &&
-            c >= 0 && c < static_cast<int>(board[0].size())) {
-            board[r][c] = 1;
-        }
+    if (row + 3 >= rows || column + 2 >= columns) {
+        return;
     }
+
+    board[row][column] = 1;
+    board[row][column + 1] = 1;
+    board[row + 1][column] = 1;
+    board[row + 2][column + 1] = 1;
+    board[row + 3][column + 1] = 1;
+    board[row + 3][column + 2] = 1;
 }
 
 void randomFill(vector<vector<int>>& board, int percent) {
-    for (auto& row : board) {
+    for (vector<int>& row : board) {
         for (int& cell : row) {
-            cell = randomInt(1, 100) <= percent ? 1 : 0;
+            if (randomInt(1, 100) <= percent) {
+                cell = 1;
+            } else {
+                cell = 0;
+            }
         }
     }
 }
 
 void runLife(vector<vector<int>> board, int generations, int delayMs) {
-    for (int generation = 0; generation < generations; ++generation) {
+    for (int generation = 0; generation < generations; generation++) {
         clearConsole();
-        cout << "Поколение: " << generation << "\n\n";
+
+        cout << "Поколение: " << generation << endl;
+        cout << endl;
+
         printLifeBoard(board);
-        board = nextGeneration(board);
+
+        board = createNextGeneration(board);
+
         this_thread::sleep_for(chrono::milliseconds(delayMs));
     }
 }
 
-void task1_3() {
+void thirdTask() {
     int choice;
-    cout << "1 - показать фигуру Eater\n";
-    cout << "2 - случайная колония\n";
+
+    cout << "1 - показать фигуру Eater" << endl;
+    cout << "2 - случайная колония" << endl;
     cout << "Выбор: ";
     cin >> choice;
 
-    const int rows = 25;
-    const int cols = 60;
+    int rows = 25;
+    int columns = 60;
 
-    vector<vector<int>> board(rows, vector<int>(cols, 0));
+    vector<vector<int>> board(rows, vector<int>(columns, 0));
 
     if (choice == 1) {
         placeEater(board, 10, 25);
@@ -264,20 +290,20 @@ void task1_3() {
 int main() {
     int choice;
 
-    cout << "1 - левая верхняя четверть квадратной матрицы\n";
-    cout << "2 - сумма цифр элементов строк\n";
-    cout << "3 - клеточный автомат Джона Конвея\n";
+    cout << "1 - левая верхняя четверть квадратной матрицы" << endl;
+    cout << "2 - сумма цифр элементов строк" << endl;
+    cout << "3 - клеточный автомат Джона Конвея" << endl;
     cout << "Выбор: ";
     cin >> choice;
 
     if (choice == 1) {
-        task1_1();
+        firstTask();
     } else if (choice == 2) {
-        task1_2();
+        secondTask();
     } else if (choice == 3) {
-        task1_3();
+        thirdTask();
     } else {
-        cout << "Неверный выбор.\n";
+        cout << "Неверный выбор" << endl;
     }
 
     return 0;

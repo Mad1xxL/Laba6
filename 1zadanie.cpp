@@ -262,8 +262,6 @@ void task1_3() {
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
-
     int choice;
 
     cout << "1 - левая верхняя четверть квадратной матрицы\n";

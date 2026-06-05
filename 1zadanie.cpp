@@ -19,7 +19,7 @@ int randomInt(int left, int right) {
 void printMatrix(const vector<vector<int>>& matrix) {
     for (const vector<int>& row : matrix) {
         for (int value : row) {
-            cout << setw(4) << value;
+            cout << setw(6) << value;
         }
 
         cout << endl;

@@ -118,18 +118,21 @@ unsigned char multiplyInGaloisField(unsigned char firstValue, unsigned char seco
     return result;
 }
 
+// этап AES, где текущее состояние XOR-ится с раундовым ключом.
 void addRoundKey(vector<unsigned char>& state, const vector<unsigned char>& roundKeys, int round) {
     for (int i = 0; i < 16; i++) {
         state[i] ^= roundKeys[round * 16 + i];
     }
 }
 
+// этап AES, где каждый байт заменяется по стандартной таблице S-Box.
 void subBytes(vector<unsigned char>& state) {
     for (unsigned char& byte : state) {
         byte = sBox[byte];
     }
 }
 
+// этап AES, где строки состояния циклически сдвигаются.
 void shiftRows(vector<unsigned char>& state) {
     vector<unsigned char> oldState = state;
 
@@ -154,6 +157,7 @@ void shiftRows(vector<unsigned char>& state) {
     state[15] = oldState[11];
 }
 
+// этап AES, где байты каждого столбца перемешиваются между собой.
 void mixColumns(vector<unsigned char>& state) {
     for (int column = 0; column < 4; column++) {
         int index = column * 4;
@@ -211,6 +215,7 @@ vector<unsigned char> expandKey(const vector<unsigned char>& key) {
     return roundKeys;
 }
 
+// Шифрует один блок размером 16 байт алгоритмом AES-128.
 vector<unsigned char> encryptBlock(vector<unsigned char> state, const vector<unsigned char>& roundKeys, bool needPrint) {
     if (needPrint) {
         printBytes(state, "State initial");

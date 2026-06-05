@@ -337,6 +337,7 @@ int main() {
 
     string text;
     getline(cin, text);
+    cout << endl;
 
     vector<unsigned char> plainText = stringToBytes(text);
     vector<unsigned char> paddedText = addPadding(plainText);

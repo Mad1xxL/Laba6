@@ -74,6 +74,7 @@ void firstTask() {
     cout << "Максимальный элемент в левой верхней четверти: " << maxValue << endl;
 }
 
+// Вычисляет сумму цифр числа.
 int sumDigits(int number) {
     number = abs(number);
 
@@ -156,10 +157,12 @@ void secondTask() {
     delete[] resultArray;
 }
 
+// Очищает консоль
 void clearConsole() {
     system("clear");
 }
 
+// Печатает поле клеточного автомата.
 void printLifeBoard(const vector<vector<int>>& board) {
     for (const vector<int>& row : board) {
         for (int cell : row) {
@@ -174,6 +177,7 @@ void printLifeBoard(const vector<vector<int>>& board) {
     }
 }
 
+// Считает количество живых соседей у клетки.
 int countAliveNeighbours(const vector<vector<int>>& board, int row, int column) {
     int rows = board.size();
     int columns = board[0].size();
@@ -197,6 +201,7 @@ int countAliveNeighbours(const vector<vector<int>>& board, int row, int column) 
     return count;
 }
 
+// Создает следующее поколение клеточного автомата
 vector<vector<int>> createNextGeneration(const vector<vector<int>>& board) {
     int rows = board.size();
     int columns = board[0].size();
@@ -222,6 +227,7 @@ vector<vector<int>> createNextGeneration(const vector<vector<int>>& board) {
     return nextBoard;
 }
 
+// Размещает на поле фигуру Eater.
 void placeEater(vector<vector<int>>& board, int row, int column) {
     int rows = board.size();
     int columns = board[0].size();
@@ -238,6 +244,7 @@ void placeEater(vector<vector<int>>& board, int row, int column) {
     board[row + 3][column + 2] = 1;
 }
 
+// Случайно заполняет поле живыми клетками.
 void randomFill(vector<vector<int>>& board, int percent) {
     for (vector<int>& row : board) {
         for (int& cell : row) {
@@ -250,6 +257,7 @@ void randomFill(vector<vector<int>>& board, int percent) {
     }
 }
 
+// Запускает анимацию клеточного автомата:
 void runLife(vector<vector<int>> board, int generations, int delayMs) {
     for (int generation = 0; generation < generations; generation++) {
         clearConsole();

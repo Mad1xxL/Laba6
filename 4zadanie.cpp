@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// Переводит доску из массива 0 и 1 в битовую маску.
 int boardToMask(const vector<int>& board) {
     int mask = 0;
 
@@ -17,6 +18,7 @@ int boardToMask(const vector<int>& board) {
     return mask;
 }
 
+// Создает целевую шахматную доску и переводит ее в битовую маску.
 int createChessBoardMask(int rows, int columns, int firstValue) {
     vector<int> board(rows * columns);
 
@@ -33,6 +35,7 @@ int createChessBoardMask(int rows, int columns, int firstValue) {
     return boardToMask(board);
 }
 
+// Создает список всех соседних пар клеток.
 vector<pair<int, int>> createNeighborPairs(int rows, int columns) {
     vector<pair<int, int>> pairs;
 
@@ -53,6 +56,7 @@ vector<pair<int, int>> createNeighborPairs(int rows, int columns) {
     return pairs;
 }
 
+// Поиск минимальных шагов 
 int findMinMoves(int start, int firstTarget, int secondTarget, int rows, int columns) {
     if (start == firstTarget || start == secondTarget) {
         return 0;

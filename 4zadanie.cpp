@@ -5,19 +5,19 @@
 
 using namespace std;
 
-long long boardToMask(const vector<int>& board) {
-    long long mask = 0;
+int boardToMask(const vector<int>& board) {
+    int mask = 0;
 
     for (int i = 0; i < board.size(); i++) {
         if (board[i] == 1) {
-            mask = mask | (1LL << i);
+            mask = mask | (1 << i);
         }
     }
 
     return mask;
 }
 
-long long createChessBoardMask(int rows, int columns, int firstValue) {
+int createChessBoardMask(int rows, int columns, int firstValue) {
     vector<int> board(rows * columns);
 
     for (int i = 0; i < rows; i++) {
@@ -53,28 +53,28 @@ vector<pair<int, int>> createNeighborPairs(int rows, int columns) {
     return pairs;
 }
 
-int findMinMoves(long long start, long long firstTarget, long long secondTarget, int rows, int columns) {
+int findMinMoves(int start, int firstTarget, int secondTarget, int rows, int columns) {
     if (start == firstTarget || start == secondTarget) {
         return 0;
     }
 
     vector<pair<int, int>> pairs = createNeighborPairs(rows, columns);
 
-    queue<long long> queueValues;
-    map<long long, int> distance;
+    queue<int> queueValues;
+    map<int, int> distance;
 
     queueValues.push(start);
     distance[start] = 0;
 
     while (!queueValues.empty()) {
-        long long current = queueValues.front();
+        int current = queueValues.front();
         queueValues.pop();
 
         for (pair<int, int> currentPair : pairs) {
-            long long next = current;
+            int next = current;
 
-            next = next ^ (1LL << currentPair.first);
-            next = next ^ (1LL << currentPair.second);
+            next = next ^ (1 << currentPair.first);
+            next = next ^ (1 << currentPair.second);
 
             if (distance.count(next) == 0) {
                 distance[next] = distance[current] + 1;
@@ -137,9 +137,9 @@ int main() {
         }
     }
 
-    long long start = boardToMask(board);
-    long long firstTarget = createChessBoardMask(rows, columns, 0);
-    long long secondTarget = createChessBoardMask(rows, columns, 1);
+    int start = boardToMask(board);
+    int firstTarget = createChessBoardMask(rows, columns, 0);
+    int secondTarget = createChessBoardMask(rows, columns, 1);
 
     cout << endl;
     cout << "Исходная доска:" << endl;

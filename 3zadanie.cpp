@@ -41,6 +41,7 @@ double getDifference(const Vector& first, const Vector& second) {
     return maxDifference;
 }
 
+// Решает систему A * x = b прямым методом LU-разложения.
 Vector solveLU(const Matrix& matrix, const Vector& rightPart) {
     int size = static_cast<int>(matrix.size());
 
@@ -110,6 +111,7 @@ Vector solveLU(const Matrix& matrix, const Vector& rightPart) {
     return x;
 }
 
+// Решает систему A * x = b итерационным методом Зейделя.
 Vector solveBySeidel(const Matrix& matrix, const Vector& rightPart, double epsilon) {
     int size = static_cast<int>(matrix.size());
 
